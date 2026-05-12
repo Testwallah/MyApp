@@ -1,4 +1,4 @@
-name: 🚀 Build Pure React Native APK
+name: 🚀 Building Pure React Native APK
 
 on:
   push:
