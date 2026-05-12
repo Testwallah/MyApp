@@ -1,0 +1,44 @@
+name: 🚀 Build Pure React Native APK
+
+on:
+  push:
+    branches:
+      - main # तुम्हारी मेन ब्रांच
+
+jobs:
+  build:
+    name: 🏗️ APK बनाने का काम चालू...
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 तुम्हारी फाइलें ला रहे हैं
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Node.js मशीन चालू कर रहे हैं
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: ☕ Android के लिए Java लगा रहे हैं
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: ✨ React Native का पूरा ढाँचा खुद बना रहे हैं (Magic Step!)
+        run: npx react-native@latest init MyApp
+
+      - name: 🔄 तुम्हारा App.js उसके अंदर डाल रहे हैं
+        run: cp App.js MyApp/App.js
+
+      - name: 🔨 असली APK को पकाना शुरू...
+        run: |
+          cd MyApp/android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: 🎁 तुम्हारी डाउनलोड लिंक तैयार है!
+        uses: actions/upload-artifact@v3
+        with:
+          name: Mera-Bina-Template-APK 📱
+          path: MyApp/android/app/build/outputs/apk/debug/app-debug.apk
