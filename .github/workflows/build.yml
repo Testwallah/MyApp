@@ -12,15 +12,15 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # यहाँ v3 से v4 कर दिया 🚀
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4 # यहाँ भी v4 कर दिया 🚀
         with:
           node-version: '18'
 
       - name: Setup Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4 # यहाँ भी v4 कर दिया 🚀
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -43,7 +43,7 @@ jobs:
           ./gradlew assembleDebug
 
       - name: Upload Download Link
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # असली प्रॉब्लम यही थी, इसे v4 कर दिया! 🎯
         with:
           name: Mera-Bina-Template-APK
           path: MyApp/android/app/build/outputs/apk/debug/app-debug.apk
