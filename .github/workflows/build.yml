@@ -1,0 +1,49 @@
+name: Build Pure React Native APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Init React Native (Magic Step)
+        run: npx --yes react-native@latest init MyApp
+
+      - name: Copy App.js
+        run: |
+          if [ -f App.js ]; then
+            cp App.js MyApp/App.js
+          else
+            echo "App.js nahi mili! Default wali use kar rahe hain."
+          fi
+
+      - name: Build APK File
+        run: |
+          cd MyApp/android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload Download Link
+        uses: actions/upload-artifact@v3
+        with:
+          name: Mera-Bina-Template-APK
+          path: MyApp/android/app/build/outputs/apk/debug/app-debug.apk
