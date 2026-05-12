@@ -1,50 +1,57 @@
-name: 🚀 Build Pure React Native APK 2026
+name: 🏆 Final React Native APK 2026
 
 on:
   push:
     branches:
       - main
 
+# 1️⃣ GitHub को बता रहे हैं कि जबरदस्ती Node 24 चलाओ!
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
+
 jobs:
   build:
-    name: 🏗️ Build APK
+    name: 🚀 Build My APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout Code
+      - name: 📥 कोड चेकआउट करें
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js (Latest 2026)
+      - name: ⚙️ Node.js 24 सेट करें (पीले एरर का इलाज)
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # ⚡ वर्ज़न 18 से 20 कर दिया!
+          node-version: '24' 
 
-      - name: ☕ Setup Java
+      - name: ☕ Java 17 सेट करें
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: 🪄 Init React Native (Auto-Yes Magic!)
-        # 🤖 'yes |' लगाने से रोबोट अपने आप हर सवाल का जवाब 'Yes' दे देगा!
-        run: yes | npx react-native@latest init MyApp --pm npm
+      - name: 🪄 नया ढाँचा बनाएँ (लाल एरर का परमानेंट इलाज)
+        # 2️⃣ बिना किसी 'yes' के सीधा नया टूल इस्तेमाल कर रहे हैं
+        run: npx @react-native-community/cli@latest init MyApp --skip-install
 
-      - name: 📝 Copy App.js
+      - name: 📦 पैकेजेस इनस्टॉल करें
+        run: |
+          cd MyApp
+          npm install
+
+      - name: 📝 तुम्हारी App.js फाइल कॉपी करें
         run: |
           if [ -f App.js ]; then
             cp App.js MyApp/App.js
-          else
-            echo "App.js नहीं मिली! डिफ़ॉल्ट का उपयोग कर रहे हैं।"
           fi
 
-      - name: 🔨 Build APK File
+      - name: 🔨 असली APK पकाएं
         run: |
           cd MyApp/android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: 🎁 Upload Download Link
+      - name: 🎁 डाउनलोड लिंक तैयार करें
         uses: actions/upload-artifact@v4
         with:
-          name: Mera-Bina-Template-APK-2026 📱
+          name: Final-Bawal-APK 📱
           path: MyApp/android/app/build/outputs/apk/debug/app-debug.apk
