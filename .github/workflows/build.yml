@@ -1,4 +1,4 @@
-name: Build Pure React Native APK
+name: 🚀 Build Pure React Native APK 2026
 
 on:
   push:
@@ -7,43 +7,44 @@ on:
 
 jobs:
   build:
-    name: Build APK
+    name: 🏗️ Build APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4 # यहाँ v3 से v4 कर दिया 🚀
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4 # यहाँ भी v4 कर दिया 🚀
+      - name: ⚙️ Setup Node.js (Latest 2026)
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20' # ⚡ वर्ज़न 18 से 20 कर दिया!
 
-      - name: Setup Java
-        uses: actions/setup-java@v4 # यहाँ भी v4 कर दिया 🚀
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Init React Native (Magic Step)
-        run: npx --yes react-native@latest init MyApp
+      - name: 🪄 Init React Native (Auto-Yes Magic!)
+        # 🤖 'yes |' लगाने से रोबोट अपने आप हर सवाल का जवाब 'Yes' दे देगा!
+        run: yes | npx react-native@latest init MyApp --pm npm
 
-      - name: Copy App.js
+      - name: 📝 Copy App.js
         run: |
           if [ -f App.js ]; then
             cp App.js MyApp/App.js
           else
-            echo "App.js nahi mili! Default wali use kar rahe hain."
+            echo "App.js नहीं मिली! डिफ़ॉल्ट का उपयोग कर रहे हैं।"
           fi
 
-      - name: Build APK File
+      - name: 🔨 Build APK File
         run: |
           cd MyApp/android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Upload Download Link
-        uses: actions/upload-artifact@v4 # असली प्रॉब्लम यही थी, इसे v4 कर दिया! 🎯
+      - name: 🎁 Upload Download Link
+        uses: actions/upload-artifact@v4
         with:
-          name: Mera-Bina-Template-APK
+          name: Mera-Bina-Template-APK-2026 📱
           path: MyApp/android/app/build/outputs/apk/debug/app-debug.apk
