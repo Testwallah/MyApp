@@ -1,57 +1,60 @@
-name: 🏆 Final React Native APK 2026
+name: 🚀 Build Offline React JS APK
 
 on:
   push:
     branches:
       - main
 
-# 1️⃣ GitHub को बता रहे हैं कि जबरदस्ती Node 24 चलाओ!
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
-
 jobs:
   build:
-    name: 🚀 Build My APK
+    name: 🏗️ Offline APK Builder
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 कोड चेकआउट करें
+      - name: 📥 तेरा कोड ला रहे हैं
         uses: actions/checkout@v4
 
-      - name: ⚙️ Node.js 24 सेट करें (पीले एरर का इलाज)
+      - name: ⚙️ Node.js 20 सेट कर रहे हैं
         uses: actions/setup-node@v4
         with:
-          node-version: '24' 
+          node-version: '20'
 
-      - name: ☕ Java 17 सेट करें
+      - name: ☕ Java 17 सेट कर रहे हैं
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: 🪄 नया ढाँचा बनाएँ (लाल एरर का परमानेंट इलाज)
-        # 2️⃣ बिना किसी 'yes' के सीधा नया टूल इस्तेमाल कर रहे हैं
-        run: npx @react-native-community/cli@latest init MyApp --skip-install
+      - name: 📦 पैकेजेस इंस्टॉल कर रहे हैं
+        run: npm install
 
-      - name: 📦 पैकेजेस इनस्टॉल करें
-        run: |
-          cd MyApp
-          npm install
+      - name: 💻 React ऐप को पका रहे हैं (Build)
+        run: npm run build
 
-      - name: 📝 तुम्हारी App.js फाइल कॉपी करें
+      - name: 🪄 Capacitor सेट कर रहे हैं (Offline Magic ✨)
         run: |
-          if [ -f App.js ]; then
-            cp App.js MyApp/App.js
+          # यह टूल तेरे कोड को ऑफलाइन डिब्बे में डालेगा
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          
+          # यह अपने आप चेक करेगा कि तेरा फोल्डर dist है या build
+          if [ -d "dist" ]; then
+            WEB_DIR="dist"
+          else
+            WEB_DIR="build"
           fi
+          
+          npx cap init "MyOfflineApp" "com.myoffline.app" --web-dir $WEB_DIR
+          npx cap add android
+          npx cap sync android
 
-      - name: 🔨 असली APK पकाएं
+      - name: 🔨 असली Offline APK बना रहे हैं
         run: |
-          cd MyApp/android
+          cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: 🎁 डाउनलोड लिंक तैयार करें
+      - name: 🎁 फाइनल ऐप डाउनलोड लिंक 
         uses: actions/upload-artifact@v4
         with:
-          name: Final-Bawal-APK 📱
-          path: MyApp/android/app/build/outputs/apk/debug/app-debug.apk
+          name: React-Offline-APK 📱
+          path: android/app/build/outputs/apk/debug/app-debug.apk
