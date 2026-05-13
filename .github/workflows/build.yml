@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+# 1️⃣ पीले एरर का परमानेंट इलाज!
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     name: 🏗️ Super Light APK Builder
@@ -14,10 +18,10 @@ jobs:
       - name: 📥 तेरा कोड ला रहे हैं
         uses: actions/checkout@v4
 
-      - name: ⚙️ Node.js 20 सेट कर रहे हैं
+      - name: ⚙️ Node.js 24 सेट कर रहे हैं (नया 2026 वर्ज़न)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: ☕ Java 17 सेट कर रहे हैं
         uses: actions/setup-java@v4
@@ -25,16 +29,16 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: 🪄 मशीन खुद React का इंजन बनाएगी (Zero Error Magic ✨)
+      - name: 🪄 मशीन खुद React का इंजन बना रही है
         run: |
-          # मशीन खुद एकदम नया और हल्का ढाँचा बना रही है
           npx create-vite@latest MyReactApp --template react
           cd MyReactApp
           npm install
+          # 2️⃣ 👉 लाल एरर का असली इलाज: तेरे आइकॉन डाउनलोड कर रहे हैं!
+          npm install lucide-react
 
       - name: 📝 तेरा कोड डिब्बे में डाल रहे हैं
         run: |
-          # अगर तेरी रिपॉजिटरी में App.js है, तो उसे यहाँ डाल देंगे
           if [ -f App.js ]; then
             cp App.js MyReactApp/src/App.jsx
           fi
@@ -44,12 +48,12 @@ jobs:
           cd MyReactApp
           npm run build
 
-      - name: 📱 ऐप का नाम सेट कर रहे हैं (Capacitor)
+      - name: 📱 ऐप का नाम सेट कर रहे हैं
         run: |
           cd MyReactApp
           npm install @capacitor/core @capacitor/cli @capacitor/android
           
-          # 👉 ध्यान दें: यहीं पर तू अपने ऐप का नाम बदल सकता है!
+          # 👉 यहीं अपना नाम सेट कर ले!
           npx cap init "Mera Bawal App" "com.bawal.app" --web-dir dist
           npx cap add android
           npx cap sync android
@@ -60,7 +64,7 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: 🎁 फाइनली तेरा छोटा और पावरफुल ऐप 
+      - name: 🎁 फाइनली तेरा छोटा और पावरफुल ऐप
         uses: actions/upload-artifact@v4
         with:
           name: Mini-Bawal-APK 📱
