@@ -5,7 +5,6 @@ on:
     branches:
       - main
 
-# 1️⃣ पीले एरर का परमानेंट इलाज!
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -18,23 +17,22 @@ jobs:
       - name: 📥 तेरा कोड ला रहे हैं
         uses: actions/checkout@v4
 
-      - name: ⚙️ Node.js 24 सेट कर रहे हैं (नया 2026 वर्ज़न)
+      - name: ⚙️ Node.js 24 सेट कर रहे हैं
         uses: actions/setup-node@v4
         with:
           node-version: '24'
 
-      - name: ☕ Java 17 सेट कर रहे हैं
+      - name: ☕ Java 21 सेट कर रहे हैं (👉 यही असली फिक्स है!)
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: '21' # 17 की जगह 21 कर दिया 🔥
 
       - name: 🪄 मशीन खुद React का इंजन बना रही है
         run: |
           npx create-vite@latest MyReactApp --template react
           cd MyReactApp
           npm install
-          # 2️⃣ 👉 लाल एरर का असली इलाज: तेरे आइकॉन डाउनलोड कर रहे हैं!
           npm install lucide-react
 
       - name: 📝 तेरा कोड डिब्बे में डाल रहे हैं
@@ -53,12 +51,12 @@ jobs:
           cd MyReactApp
           npm install @capacitor/core @capacitor/cli @capacitor/android
           
-          # 👉 यहीं अपना नाम सेट कर ले!
+          # 👉 यहाँ अपना नाम सेट कर ले!
           npx cap init "Mera Bawal App" "com.bawal.app" --web-dir dist
           npx cap add android
           npx cap sync android
 
-      - name: 🔨 असली Offline APK बना रहे हैं (सिर्फ 4-5 MB)
+      - name: 🔨 असली Offline APK बना रहे हैं (Java 21 की पावर से ⚡)
         run: |
           cd MyReactApp/android
           chmod +x gradlew
